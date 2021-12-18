@@ -39,5 +39,12 @@ astra.db:
 tinhong:
   secret-key: colammoicoan
 
+# oauth2
+security:
+  oauth2:
+    resource:
+      filter-order: 3
+
+
 
 
