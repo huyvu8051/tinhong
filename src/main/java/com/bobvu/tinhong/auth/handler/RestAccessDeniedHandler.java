@@ -1,4 +1,4 @@
-package com.bobvu.tinhong.auth;
+package com.bobvu.tinhong.auth.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.access.AccessDeniedException;

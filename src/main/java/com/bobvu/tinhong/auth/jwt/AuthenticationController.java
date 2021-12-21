@@ -1,4 +1,4 @@
-package com.bobvu.tinhong.auth;
+package com.bobvu.tinhong.auth.jwt;
 
 import com.bobvu.tinhong.cassandra.user.User;
 import com.bobvu.tinhong.cassandra.user.UserService;
@@ -7,7 +7,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;

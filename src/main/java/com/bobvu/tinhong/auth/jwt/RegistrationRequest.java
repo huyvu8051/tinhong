@@ -1,4 +1,4 @@
-package com.bobvu.tinhong.auth;
+package com.bobvu.tinhong.auth.jwt;
 
 import lombok.Data;
 

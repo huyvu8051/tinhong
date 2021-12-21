@@ -1,6 +1,6 @@
 package com.bobvu.tinhong.cassandra.user;
 
-import com.bobvu.tinhong.auth.RegistrationRequest;
+import com.bobvu.tinhong.auth.jwt.RegistrationRequest;
 
 public interface UserService {
 

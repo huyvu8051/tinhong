@@ -18,6 +18,14 @@
     </properties>
     <dependencies>
 
+        <!-- aws-s3 -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>1.12.129</version>
+        </dependency>
+
+
         <!-- add javax.xml.bind library, because of deprecated in java 11 -->
 
         <dependency>

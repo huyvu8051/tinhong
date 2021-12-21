@@ -1,4 +1,4 @@
-package com.bobvu.tinhong.auth;
+package com.bobvu.tinhong.auth.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

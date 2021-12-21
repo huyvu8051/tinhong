@@ -1,4 +1,4 @@
-package com.bobvu.tinhong.google.auth;
+package com.bobvu.tinhong.auth.google;
 
 import lombok.Data;
 
