@@ -86,6 +86,7 @@ public class GoogleAuthenticationController {
             return AuthenticationResponse.builder()
                     .jwt(token)
                     .username(email)
+                    .fullName(user.getFullName())
                     .avatar(user.getAvatar())
                     .locale(user.getLocale())
                     .authorities(user.getAuthorities())
