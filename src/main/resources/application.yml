@@ -7,9 +7,9 @@ spring:
   data:
     cassandra:
       keyspace-name: main
-      username: PQYYISzxwEgwRrftkUKXKNGv
-      password: CC_67i_q2u6Fq45SHJYvr0uTbokhosF3TkZbzZHJ4Eln1AA4RfvsG8Re.zm8gtPf,L,K3HKxvNjMUb_uaylMZWHWZ-dxvfDUcDB1CdiSQc-vMqIlUp_MvR6JOOjbhytg
-      schema-action: recreate_drop_unused
+      username: AUnGhASGJxQtFmnBbsPwOIRt
+      password: cpNPRh7eZ0,QQkd02rHMiSNEZUZ414PKMZIzOY1bqJsqFnaRx,tmmO1,mLt2wmTEMfQkJOzfQ4SZI2QYZcDKDT1Ih28l8nOofAvwaExtEtpIGOZvsqvNR2rKApPTHImO
+      schema-action: recreate
       request:
         timeout: 20s
       connection:
@@ -32,7 +32,7 @@ astra.db:
   id: b5c6e810-0fc9-4de4-b0bd-40541515e237-1
   region: asia-south1
   keyspace: main
-  application.token: AstraCS:PQYYISzxwEgwRrftkUKXKNGv:b744c2f301884cd2aa5b940f5869efce7c8c1b29b2d8090448ccdaa8d8c512b3
+  application.token: AstraCS:AUnGhASGJxQtFmnBbsPwOIRt:9805bff2ec547a307751eb34bc3c0e181b1fff1044b5822e5ffaae349359bcad
 
 
 # application

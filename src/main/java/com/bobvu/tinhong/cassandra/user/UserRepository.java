@@ -1,6 +1,5 @@
 package com.bobvu.tinhong.cassandra.user;
 
-import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.repository.query.Param;

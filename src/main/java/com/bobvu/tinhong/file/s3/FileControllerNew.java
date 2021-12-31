@@ -15,7 +15,7 @@ public class FileControllerNew {
 
     private static final String FILE_NAME = "fileName";
 
-    @Autowired
+   // @Autowired
     FileServiceNew fileServiceNew;
 
     @GetMapping

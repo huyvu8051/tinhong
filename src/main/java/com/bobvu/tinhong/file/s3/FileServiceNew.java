@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-@Service
+//@Service
 public class FileServiceNew {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileServiceNew.class);
@@ -21,7 +21,7 @@ public class FileServiceNew {
     @Autowired
     private AmazonS3 amazonS3;
 
-    @Value("${s3.bucket.name}")
+    //@Value("${s3.bucket.name}")
     private String s3BucketName;
 
     private String generateUrl(String fileName, HttpMethod httpMethod) {
