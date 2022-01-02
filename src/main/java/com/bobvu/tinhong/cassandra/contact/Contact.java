@@ -1,7 +1,9 @@
 package com.bobvu.tinhong.cassandra.contact;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
@@ -20,7 +22,7 @@ public class Contact {
     @PrimaryKey
     private ContactKey key;
 
-    private String partnerId;// partner id
+
     private String fullName;// partner fullName
     private String avatar; // partner avatar
 
@@ -32,6 +34,8 @@ public class Contact {
     @Builder
     @Data
     @UserDefinedType
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class ContactKey{
         @PrimaryKeyColumn(ordinal = 0, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
         private Timestamp lastMessageTime;
@@ -39,6 +43,9 @@ public class Contact {
         private UUID conversationId;
         @PrimaryKeyColumn(ordinal = 2, type = PrimaryKeyType.PARTITIONED)
         private String owner;
+
+        @PrimaryKeyColumn(ordinal = 1, type = PrimaryKeyType.CLUSTERED)
+        private String partnerId;// partner id
     }
 
 }

@@ -1,5 +1,8 @@
 package com.bobvu.tinhong.cassandra.chat;
 
+import com.bobvu.tinhong.cassandra.contact.Contact;
+import com.bobvu.tinhong.cassandra.contact.ContactMapper;
+import com.bobvu.tinhong.cassandra.contact.ContactRepository;
 import com.bobvu.tinhong.cassandra.repository.*;
 import com.bobvu.tinhong.cassandra.user.User;
 import lombok.AllArgsConstructor;
@@ -8,105 +11,73 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class ChatServiceImpl implements ChatService {
     private final ConversationRepository conversationRepository;
-    private final ConversationUserRepository conversationUserRepository;
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
     private final UserConversationRepository userConversationRepository;
+    private final ContactRepository contactRepository;
+    private final ContactMapper contactMapper;
 
 
     @Override
     public ListConversationResponse findAllConversation(String username) {
 
-        List<ConversationUser> conversationUsers = conversationUserRepository.findAllByPrimaryKeyUsername(username);
 
-
-        List<ConversationResponse> result = new ArrayList<>();
-        for (ConversationUser conversationUser : conversationUsers) {
-
-            Conversation conversation = conversationRepository.findById(conversationUser.getPrimaryKey().getConversationId()).get();
-
-            List<UserConversation> userConversations = userConversationRepository.findAllByPrimaryKeyConversationId(conversation.getId());
-
-            List<User> userInConversation = userRepository.findAllById(userConversations.stream().map(e -> e.getPrimaryKey().getUsername()).collect(Collectors.toList()));
-
-            List<ConversationResponse.Partner> partners = userInConversation.stream().map(e -> ConversationResponse.Partner.builder()
-                    .username(e.getUsername())
-                    .fullName(e.getFullName())
-                    .avatar(e.getAvatar())
-                    .build()).collect(Collectors.toList());
-
-            List<Message> listMessage = messageRepository.findAllByPrimaryKeyConversationId(conversation.getId());
-
-            ConversationResponse conversationResponse = ConversationResponse.builder()
-                    .id(conversation.getId())
-                    .name(conversation.getName())
-                    .partners(partners)
-
-                    .build();
-
-
-            if (listMessage.size() > 0) {
-
-                Message message = listMessage.get(0);
-
-                ConversationResponse.Message ms = ConversationResponse.Message.builder()
-                        .byPartnerId(message.getPostedById())
-                        .text(message.getText())
-                        .createdDate(message.getPrimaryKey().getCreatedDate())
-                        .build();
-
-                conversationResponse.setLastMessage(ms);
-            }
-
-            result.add(conversationResponse);
-        }
 
         return ListConversationResponse.builder().conversations(result).build();
     }
 
     @Override
-    public void addPartner(User requester, String personRequested) {
+    public ContactResponse addPartner(User requester, String personRequested) {
 
+        // check is conversation existed
+        Optional<Contact> optional= contactRepository.findOneByKeyOwnerAndKeyPartnerId(requester.getUsername(), personRequested);
+        if(optional.isPresent()){
+
+            return contactMapper.toDto(optional.get());
+        }
 
 
         Optional<User> requestedOptional = userRepository.findOneByUsername(personRequested);
         User requested = requestedOptional.orElseThrow(() -> new UsernameNotFoundException("Person requested not found!"));
 
 
-        Conversation room = com.bobvu.tinhong.cassandra.chat.Conversation.builder().id(UUID.randomUUID()).name("Conversation between " + requester.getUsername() + " and " + personRequested).build();
-
-        conversationRepository.save(room);
-
-
-        ConversationUser cu1 = ConversationUser.builder()
-                .primaryKey(ConversationUser.ConversationUserKey.builder()
-                        .conversationId(room.getId())
-                        .username(requester.getUsername())
-                        .build())
-                .build();
-        ConversationUser cu2 = ConversationUser.builder().primaryKey(ConversationUser.ConversationUserKey.builder().conversationId(room.getId()).username(personRequested).build()).build();
-
-        conversationUserRepository.save(cu1);
-        conversationUserRepository.save(cu2);
-
-        UserConversation uc1 = UserConversation.builder()
-                .primaryKey(UserConversation.UserConversationKey.builder().conversationId(room.getId()).username(requester.getUsername()).build())
+        Conversation conversation = Conversation.builder()
+                .name("Conversation between " + requester.getUsername() + " and " + personRequested )
+                .id(UUID.randomUUID())
                 .build();
 
-        UserConversation uc2 = UserConversation.builder()
-                .primaryKey(UserConversation.UserConversationKey.builder().conversationId(room.getId()).username(personRequested).build())
+        conversationRepository.save(conversation);
+
+
+
+
+
+    }
+
+
+    private void createContact(String requester, User personRequested, UUID conversationId ){
+        Contact.ContactKey contactKey = Contact.ContactKey.builder()
+                .lastMessageTime(null)
+                .conversationId(conversationId)
+                .owner(requester)
+                .partnerId(personRequested.getId())
                 .build();
 
-        userConversationRepository.save(uc1);
-        userConversationRepository.save(uc2);
 
+        Contact contact = Contact.builder()
+                .key(contactKey)
+                .fullName(personRequested.getFullName())
+                .avatar(personRequested.getAvatar())
+                .lastMessageText(null)
+                .lastMessageFrom(null)
+                .build();
 
+        contactRepository.save(contact);
     }
 
     @Override
