@@ -1,5 +1,6 @@
 package com.bobvu.tinhong.cassandra.user;
 
+import com.bobvu.tinhong.cassandra.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;

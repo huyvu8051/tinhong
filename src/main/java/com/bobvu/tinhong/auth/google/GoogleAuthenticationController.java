@@ -1,9 +1,9 @@
 package com.bobvu.tinhong.auth.google;
 
-import com.bobvu.tinhong.auth.AuthenticationService;
 import com.bobvu.tinhong.auth.jwt.JwtUtil;
+import com.bobvu.tinhong.cassandra.repository.ConversationRepository;
 import com.bobvu.tinhong.cassandra.user.User;
-import com.bobvu.tinhong.cassandra.user.UserRepository;
+import com.bobvu.tinhong.cassandra.repository.UserRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.security.auth.message.AuthException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Optional;
 
 
 @RestController
@@ -31,6 +32,7 @@ public class GoogleAuthenticationController {
     private final UserRepository userRepository;
 
     private final JwtUtil jwtUtil;
+
 
     @PostMapping("/google/login")
     public AuthenticationResponse authenticate(@RequestBody GoogleAuthenticationRequest request) throws GeneralSecurityException, IOException {
@@ -58,7 +60,7 @@ public class GoogleAuthenticationController {
 
            }catch (UsernameNotFoundException e){
 
-                // create new account
+               // create new account
                String userId = payload.getSubject();
                String name = (String) payload.get("name");
                String pictureUrl = (String) payload.get("picture");
@@ -68,11 +70,11 @@ public class GoogleAuthenticationController {
 
                // Use or store profile information
                // ...
+
                User build = User.builder()
                        .username(email)
-                       .fullName(givenName)
+                       .fullName(name)
                        .avatar(pictureUrl)
-                       .locale(locale)
                        .roles(Arrays.asList("user"))
                        .build();
 
@@ -88,7 +90,6 @@ public class GoogleAuthenticationController {
                     .username(email)
                     .fullName(user.getFullName())
                     .avatar(user.getAvatar())
-                    .locale(user.getLocale())
                     .authorities(user.getAuthorities())
                     .build();
         } else {

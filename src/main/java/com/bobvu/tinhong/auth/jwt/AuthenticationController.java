@@ -40,14 +40,5 @@ public class AuthenticationController {
 
     private final UserService userService;
 
-    @PostMapping("/register")
-    public void createAuthenticationUser(@RequestBody RegistrationRequest registrationRequest, HttpServletRequest servletRequest){
-        User registered = userService.registerNewUserAccount(registrationRequest);
-
-//        String appUrl = servletRequest.getContextPath();
-//        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered,
-//                registrationRequest.getLocale(), appUrl));
-    }
-
 
 }

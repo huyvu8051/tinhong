@@ -9,15 +9,13 @@ import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 import org.springframework.data.domain.Persistable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Data
 @Builder
@@ -27,17 +25,22 @@ public class User extends Auditable implements UserDetails, Persistable {
     @Id
     @PrimaryKeyColumn(ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private String username;
-
     private String password;
-
     private String fullName;
-
     private String avatar;
+    private Gender gender;
 
-    private String locale;
+    private Location locations;
 
+    private List<Passion> passions;
     @CassandraType(type = CassandraType.Name.LIST, typeArguments = CassandraType.Name.TEXT)
+    private List<String> media;
+
+    private boolean distanceInvisible;
+
     private List<String> roles;
+
+    private UUID socketId;
 
 
     @Override
@@ -78,6 +81,29 @@ public class User extends Auditable implements UserDetails, Persistable {
 
     @Override
     public boolean isNew() {
-        return true;
+        return getCreatedDate() == null;
     }
+
+
+    enum Gender{
+        MALE, FEMALE
+    }
+    enum Passion{
+        ISFP, Blogging, Potterhead, DIY, Foodie, INFP, V_Pop, StreetFood, Trying_New_Thinks, Netflix, Board_Games, Outdoors, Taurus, Astrology, Golf, Climbing, Hiphop;
+    }
+
+    @Data
+    @UserDefinedType
+    public static class Location{
+        private float lat;
+        private float lon;
+    }
+
+
 }
+
+
+
+
+
+

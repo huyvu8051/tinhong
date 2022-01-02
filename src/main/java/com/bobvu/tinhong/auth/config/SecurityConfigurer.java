@@ -37,13 +37,12 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
        http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers("/", "/csrf", "/authentication/**", "/swagger-resources/**", "/swagger-ui.html",
-                        "/v2/api-docs", "/webjars/**", "/resources/**", "/index.html**", "/test**", "/socket.io/**", "/client.html**", "/client2.html**", "/uploads/**")
-                .permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/host/**").hasAnyAuthority("HOST", "ADMIN")
-                .antMatchers("/student/**").hasAuthority("STUDENT")
-                .anyRequest().authenticated()
+               .antMatchers("/", "/csrf", "/authentication/**", "/swagger-resources/**", "/swagger-ui.html",
+                       "/v2/api-docs", "/webjars/**", "/resources/**", "/index.html**", "/test**", "/socket.io/**", "/client.html**", "/client2.html**", "/uploads/**")
+               .permitAll()
+               .antMatchers("/user/**").hasAuthority("user")
+
+               .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
                 .authenticationEntryPoint(authenticationEntryPoint)
