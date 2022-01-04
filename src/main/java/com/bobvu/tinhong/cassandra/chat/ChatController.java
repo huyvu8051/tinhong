@@ -1,5 +1,6 @@
 package com.bobvu.tinhong.cassandra.chat;
 
+import com.bobvu.tinhong.cassandra.message.ListMessageResponse;
 import com.bobvu.tinhong.cassandra.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,16 +22,16 @@ public class ChatController {
     }
 
     @GetMapping("/findAllPartner")
-    public ResponseEntity<ListConversationResponse> findAllChatRoom(){
+    public ResponseEntity<ListContactResponse> findAllChatRoom(){
 
         User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        ListConversationResponse res = chatService.findAllConversation(userDetails.getUsername());
+        ListContactResponse res = chatService.findAllConversation(userDetails.getUsername());
 
         return ResponseEntity.ok(res);
     }
 
     @PostMapping("/addNewPartner")
-    public void addNewPartner(@RequestBody AddNewPartnerRequest request){
+    public void addNewPartner(@RequestBody AddNewPartnerRequest request) throws Exception {
         User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         chatService.addPartner(userDetails, request.getUsername());

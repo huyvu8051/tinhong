@@ -1,8 +1,6 @@
 package com.bobvu.tinhong.cassandra.contact;
 
-import com.bobvu.tinhong.cassandra.chat.ContactResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 public class ContactMapperImpl implements ContactMapper{

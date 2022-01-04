@@ -1,6 +1,6 @@
 package com.bobvu.tinhong.cassandra.repository;
 
-import com.bobvu.tinhong.cassandra.chat.Message;
+import com.bobvu.tinhong.cassandra.message.Message;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 
 import java.util.List;

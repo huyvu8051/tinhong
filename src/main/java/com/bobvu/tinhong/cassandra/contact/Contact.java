@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.core.mapping.Table;
-import org.springframework.data.cassandra.core.mapping.UserDefinedType;
+import org.springframework.data.cassandra.core.mapping.*;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -33,7 +30,7 @@ public class Contact {
 
     @Builder
     @Data
-    @UserDefinedType
+    @PrimaryKeyClass
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ContactKey{
@@ -44,7 +41,7 @@ public class Contact {
         @PrimaryKeyColumn(ordinal = 2, type = PrimaryKeyType.PARTITIONED)
         private String owner;
 
-        @PrimaryKeyColumn(ordinal = 1, type = PrimaryKeyType.CLUSTERED)
+        @PrimaryKeyColumn(ordinal = 3, type = PrimaryKeyType.CLUSTERED)
         private String partnerId;// partner id
     }
 

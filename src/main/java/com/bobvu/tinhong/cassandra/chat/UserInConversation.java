@@ -14,16 +14,16 @@ import java.util.UUID;
 @Table
 @Data
 @Builder
-public class UserConversation {
+public class UserInConversation {
     @PrimaryKey
-    private UserConversationKey primaryKey;
+    private UserInConversationKey key;
 
 
 
     @Data
     @Builder
     @PrimaryKeyClass
-    public static class UserConversationKey {
+    public static class UserInConversationKey {
 
         @PrimaryKeyColumn(ordinal = 0, type = PrimaryKeyType.PARTITIONED)
         private UUID conversationId;

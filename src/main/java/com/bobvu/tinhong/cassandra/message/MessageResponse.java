@@ -1,4 +1,4 @@
-package com.bobvu.tinhong.cassandra.chat;
+package com.bobvu.tinhong.cassandra.message;
 
 import lombok.Builder;
 import lombok.Data;
