@@ -32,8 +32,6 @@ public class User extends Auditable implements UserDetails, Persistable {
 
     private List<String> pictures;
 
-    private Location locations;
-
     private List<Passion> passions;
     @CassandraType(type = CassandraType.Name.LIST, typeArguments = CassandraType.Name.TEXT)
 
@@ -50,6 +48,9 @@ public class User extends Auditable implements UserDetails, Persistable {
     private String jobDescription;
     private String company;
     private String school;
+
+    private double longitude;
+    private double latitude;
 
 
     @Override
@@ -101,12 +102,7 @@ public class User extends Auditable implements UserDetails, Persistable {
         ISFP, Blogging, Potterhead, DIY, Foodie, INFP, V_Pop, StreetFood, Trying_New_Thinks, Netflix, Board_Games, Outdoors, Taurus, Astrology, Golf, Climbing, Hiphop;
     }
 
-    @Data
-    @UserDefinedType
-    public static class Location{
-        private float lat;
-        private float lon;
-    }
+
 
 
 }

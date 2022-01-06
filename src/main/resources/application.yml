@@ -27,7 +27,7 @@ spring:
 
 
 datastax.astra:
-  secure-connect-bundle: secure-connect-tinhong.zip
+  secure-connect-bundle: secure-connect-tinhong2.zip
 astra.db:
   id: b5c6e810-0fc9-4de4-b0bd-40541515e237-1
   region: asia-south1

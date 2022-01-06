@@ -22,6 +22,10 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void saveProfile(String username, SaveProfileRequest request) {
+        User user = userRepository.findOneByUsername(username).orElseThrow(() -> new NullPointerException("user not found!"));
+        userMapper.update(request, user);
+        userRepository.save(user);
+
 
     }
 }
