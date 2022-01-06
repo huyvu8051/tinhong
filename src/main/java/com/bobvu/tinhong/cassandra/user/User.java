@@ -30,10 +30,13 @@ public class User extends Auditable implements UserDetails, Persistable {
     private String avatar;
     private Gender gender;
 
+    private List<String> pictures;
+
     private Location locations;
 
     private List<Passion> passions;
     @CassandraType(type = CassandraType.Name.LIST, typeArguments = CassandraType.Name.TEXT)
+
     private List<String> media;
 
     private boolean distanceInvisible;
@@ -41,6 +44,12 @@ public class User extends Auditable implements UserDetails, Persistable {
     private List<String> roles;
 
     private UUID socketId;
+
+    // descripton
+    private String about;
+    private String jobDescription;
+    private String company;
+    private String school;
 
 
     @Override
@@ -85,10 +94,10 @@ public class User extends Auditable implements UserDetails, Persistable {
     }
 
 
-    enum Gender{
+    public enum Gender{
         MALE, FEMALE
     }
-    enum Passion{
+    public enum Passion{
         ISFP, Blogging, Potterhead, DIY, Foodie, INFP, V_Pop, StreetFood, Trying_New_Thinks, Netflix, Board_Games, Outdoors, Taurus, Astrology, Golf, Climbing, Hiphop;
     }
 

@@ -1,16 +1,14 @@
 package com.bobvu.tinhong.cassandra.chat;
 
-import com.bobvu.tinhong.cassandra.message.ListMessageResponse;
+import com.bobvu.tinhong.cassandra.talklastmessage.TalkLastMessageResponse;
 import com.bobvu.tinhong.cassandra.user.User;
 
-import java.util.UUID;
+import java.util.List;
 
 public interface ChatService {
-    ListContactResponse findAllConversation(String username);
+    List<TalkLastMessageResponse> findAllConversation(String username);
 
-    void addPartner(User requester, String personRequested) throws Exception;
+    void pushMessage(User sender, String targetId, String message);
 
-    void pushMessage(String username,UUID conversationId, String text);
-
-    ListMessageResponse getMessageInConversation(String username, UUID conversationId);
+    List<TalkMessageResponse> getMessageInConversation(String sender, String targetId);
 }

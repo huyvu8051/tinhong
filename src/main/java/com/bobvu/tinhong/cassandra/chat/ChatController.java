@@ -1,11 +1,13 @@
 package com.bobvu.tinhong.cassandra.chat;
 
-import com.bobvu.tinhong.cassandra.message.ListMessageResponse;
+import com.bobvu.tinhong.cassandra.talklastmessage.TalkLastMessageResponse;
 import com.bobvu.tinhong.cassandra.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("user/chat")
@@ -14,33 +16,28 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping("/getMessage")
-    public ResponseEntity<ListMessageResponse> getMessageInConversation(@RequestBody GetMessageInConverRequest request){
+    public ResponseEntity<List<TalkMessageResponse>> getMessageInConversation(@RequestBody GetMessageInConverRequest request) {
         User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        ListMessageResponse response = chatService.getMessageInConversation(userDetails.getUsername(), request.getConversationId());
+        List<TalkMessageResponse> response = chatService.getMessageInConversation(userDetails.getUsername(), request.getTargetId()
+        );
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/findAllPartner")
-    public ResponseEntity<ListContactResponse> findAllChatRoom(){
+    public ResponseEntity<List<TalkLastMessageResponse>> findAllChatRoom() {
 
         User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        ListContactResponse res = chatService.findAllConversation(userDetails.getUsername());
+        List<TalkLastMessageResponse> res = chatService.findAllConversation(userDetails.getUsername());
 
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping("/addNewPartner")
-    public void addNewPartner(@RequestBody AddNewPartnerRequest request) throws Exception {
-        User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        chatService.addPartner(userDetails, request.getUsername());
-    }
 
     @PostMapping("/pushMessage")
     public void pushMessage(@RequestBody PushMessageRequest request){
         User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        chatService.pushMessage(userDetails.getUsername(),request.getConversationId(), request.getText());
+        chatService.pushMessage(userDetails, request.getTargetId(), request.getMessage());
     }
 }

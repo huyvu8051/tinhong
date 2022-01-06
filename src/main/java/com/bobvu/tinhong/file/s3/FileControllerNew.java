@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/files")
+@RequestMapping("/user/getPresignedURL")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class FileControllerNew {
 
     private static final String FILE_NAME = "fileName";
 
-   // @Autowired
+    @Autowired
     FileServiceNew fileServiceNew;
 
     @GetMapping

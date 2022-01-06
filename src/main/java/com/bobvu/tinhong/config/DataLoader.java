@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class DataLoader implements ApplicationRunner {
 
-    private final UserESRepository userESRepository;
-
-    private final UserRepository userRepository2;
-
-    private final PasswordEncoder passwordEncoder;
+//    private final UserESRepository userESRepository;
+//
+//    private final UserRepository userRepository2;
+//
+//    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {

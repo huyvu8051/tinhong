@@ -45,6 +45,16 @@ security:
     resource:
       filter-order: 3
 
+access:
+  key:
+    id: AKIATK7H6PFSRDBRS3ZA
+    secret: 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
+
+s3:
+  region:
+    name: ap-southeast-1
+  bucket:
+    name: tinhong
 
 
 

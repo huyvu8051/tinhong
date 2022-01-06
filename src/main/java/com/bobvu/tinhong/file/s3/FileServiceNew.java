@@ -2,6 +2,7 @@ package com.bobvu.tinhong.file.s3;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.SelectObjectContentRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-//@Service
+@Service
 public class FileServiceNew {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileServiceNew.class);
@@ -21,14 +22,15 @@ public class FileServiceNew {
     @Autowired
     private AmazonS3 amazonS3;
 
-    //@Value("${s3.bucket.name}")
+    @Value("${s3.bucket.name}")
     private String s3BucketName;
 
     private String generateUrl(String fileName, HttpMethod httpMethod) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.DATE, 1); // Generated URL will be valid for 24 hours
+        calendar.add(Calendar.DATE, 1); // Generated URL will be valid for 24 hourss
         return amazonS3.generatePresignedUrl(s3BucketName, fileName, calendar.getTime(), httpMethod).toString();
+
     }
 
     @Async
