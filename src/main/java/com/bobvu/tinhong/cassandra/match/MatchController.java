@@ -1,16 +1,27 @@
 package com.bobvu.tinhong.cassandra.match;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.bobvu.tinhong.cassandra.profile.ProfileResponse;
+import com.bobvu.tinhong.cassandra.user.User;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
+@AllArgsConstructor
 @RestController
-@RequestMapping("user/chat")
+@RequestMapping("user/match")
 public class MatchController {
+private final MatchService matchService;
 
     @PostMapping("/addPartner")
     public void likePartner(@RequestBody LikePartnerRequest request){
 
+    }
+
+    @GetMapping
+    public ResponseEntity<PageResponse<ProfileResponse>> findAllSuitablePerson(@RequestBody FindSuitablePersonRequest request){
+        User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return ResponseEntity.ok(matchService.findAllSuitablePerson(userDetails, request));
     }
 }

@@ -9,13 +9,15 @@ import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
-import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 import org.springframework.data.domain.Persistable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -30,18 +32,6 @@ public class User extends Auditable implements UserDetails, Persistable {
     private String avatar;
     private Gender gender;
 
-    private List<String> pictures;
-
-    private List<Passion> passions;
-    @CassandraType(type = CassandraType.Name.LIST, typeArguments = CassandraType.Name.TEXT)
-
-    private List<String> media;
-
-    private boolean distanceInvisible;
-
-    private List<String> roles;
-
-    private UUID socketId;
 
     // descripton
     private String about;
@@ -49,8 +39,23 @@ public class User extends Auditable implements UserDetails, Persistable {
     private String company;
     private String school;
 
-    private double longitude;
-    private double latitude;
+
+    private List<String> pictures;
+    private List<Passion> passions;
+
+    private double lat;
+    private double lon;
+    private int distance;
+
+    private List<Gender> genderToShow;
+    private int yearOfBirth;
+    private int minAge;
+    private int maxAge;
+
+
+    @CassandraType(type = CassandraType.Name.LIST, typeArguments = CassandraType.Name.TEXT)
+    private List<String> roles;
+    private UUID socketId;
 
 
     @Override
@@ -93,16 +98,6 @@ public class User extends Auditable implements UserDetails, Persistable {
     public boolean isNew() {
         return getCreatedDate() == null;
     }
-
-
-    public enum Gender{
-        MALE, FEMALE
-    }
-    public enum Passion{
-        ISFP, Blogging, Potterhead, DIY, Foodie, INFP, V_Pop, StreetFood, Trying_New_Thinks, Netflix, Board_Games, Outdoors, Taurus, Astrology, Golf, Climbing, Hiphop;
-    }
-
-
 
 
 }

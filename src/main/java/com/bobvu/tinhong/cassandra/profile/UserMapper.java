@@ -13,4 +13,8 @@ public interface UserMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void update( SaveProfileRequest source, @MappingTarget User target);
+
+    com.bobvu.tinhong.elasticsearch.user.User toESEntity(User cassandraEntity);
+
+    ProfileResponse toDto(com.bobvu.tinhong.elasticsearch.user.User user);
 }

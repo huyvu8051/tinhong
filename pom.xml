@@ -71,6 +71,8 @@
         </dependency>
 
 
+
+
         <!-- anotation processor -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -142,6 +144,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>7.15.2</version>
         </dependency>
     </dependencies>
 

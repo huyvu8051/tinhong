@@ -2,6 +2,8 @@ package com.bobvu.tinhong.auth.google;
 
 import com.bobvu.tinhong.auth.jwt.JwtUtil;
 import com.bobvu.tinhong.cassandra.repository.UserRepository;
+import com.bobvu.tinhong.cassandra.user.Gender;
+import com.bobvu.tinhong.cassandra.user.Passion;
 import com.bobvu.tinhong.cassandra.user.User;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Random;
 
 
 @RestController
@@ -63,29 +66,40 @@ public class GoogleAuthenticationController {
                 // create new account
                 String userId = payload.getSubject();
                 String name = (String) payload.get("name");
-               String pictureUrl = (String) payload.get("picture");
-               String locale = (String) payload.get("locale");
-               String familyName = (String) payload.get("family_name");
-               String givenName = (String) payload.get("given_name");// fullname
+                String pictureUrl = (String) payload.get("picture");
+                String locale = (String) payload.get("locale");
+                String familyName = (String) payload.get("family_name");
+                String givenName = (String) payload.get("given_name");// fullname
 
-               // Use or store profile information
-               // ...
+                // Use or store profile information
+                // ...
 
-               User build = User.builder()
-                       .username(email)
-                       .fullName(name)
-                       .avatar(pictureUrl)
-                       .gender(User.Gender.FEMALE)
+                Random rand = new Random();
 
-                       .pictures(Arrays.asList(pictureUrl, "https://i.imgur.com/lpzlDQv.jpg", "https://i.imgur.com/pAZ8UUQ.jpg", "https://i.imgur.com/qfLln70.jpg"))
-                       .locations(null)
-                       .passions(Arrays.asList(User.Passion.Astrology, User.Passion.DIY, User.Passion.Climbing))
-                       .about("Chúng ta của hiện tại")
-                       .company("Heo khô đi những kỉ niệm xưa kia")
-                       .jobDescription("Ngày mai, người luyến lưu theo những giấc mơ từng có ")
-                       .school("Liệu có ta?")
-                       .roles(Arrays.asList("user"))
 
+                User build = User.builder()
+                        .username(email)
+                        .fullName(name)
+                        .avatar(pictureUrl)
+                        .gender(Gender.FEMALE)
+
+                        .pictures(Arrays.asList(pictureUrl, "https://i.imgur.com/lpzlDQv.jpg", "https://i.imgur.com/pAZ8UUQ.jpg", "https://i.imgur.com/qfLln70.jpg"))
+                        .lat(0)
+                        .lon(0)
+                        .distance(5000)
+                        .passions(Arrays.asList(Passion.Astrology, Passion.DIY, Passion.Climbing))
+                        .about("Chúng ta của hiện tại")
+                        .company("Heo khô đi những kỉ niệm xưa kia")
+                        .jobDescription("Ngày mai, người luyến lưu theo những giấc mơ từng có ")
+                        .school("Liệu có ta?")
+                        .roles(Arrays.asList("user"))
+
+
+                        .maxAge(70)
+                        .minAge(15)
+                        .genderToShow(Arrays.asList(Gender.FEMALE, Gender.MALE))
+                        .yearOfBirth(1982 +
+                                rand.nextInt(40))
                        .build();
 
                user = userRepository.save(build);
