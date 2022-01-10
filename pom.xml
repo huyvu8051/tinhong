@@ -18,6 +18,14 @@
     </properties>
     <dependencies>
 
+
+        <!--  generate random name  -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>0.12</version>
+        </dependency>
+
         <!--  mapstruct  -->
         <dependency>
             <groupId>org.mapstruct</groupId>

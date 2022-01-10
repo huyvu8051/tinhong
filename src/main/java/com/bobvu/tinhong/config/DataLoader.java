@@ -6,15 +6,13 @@ import com.bobvu.tinhong.cassandra.user.Gender;
 import com.bobvu.tinhong.cassandra.user.Passion;
 import com.bobvu.tinhong.cassandra.user.User;
 import com.bobvu.tinhong.elasticsearch.user.UserESRepository;
+import com.github.javafaker.Faker;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Component
 @AllArgsConstructor
@@ -29,7 +27,7 @@ public class DataLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         Random rand = new Random();
-
+        Faker faker = new Faker(new Locale("vi-VN"));
 
         List<User> users = new ArrayList<>();
         List<com.bobvu.tinhong.elasticsearch.user.User> esUsers = new ArrayList<>();
@@ -45,7 +43,7 @@ public class DataLoader implements ApplicationRunner {
             int i4 = rand.nextInt(3);
             int i5 = rand.nextInt(3);
 
-            com.bobvu.tinhong.cassandra.user.User build = User.builder().username(i + "email@gmail.com").fullName("full Name" + i).avatar(getRandomImgUrl()).gender(i1 % 2 == 0 ? Gender.FEMALE : Gender.MALE)
+            com.bobvu.tinhong.cassandra.user.User build = User.builder().username(faker.internet().emailAddress()).fullName(faker.name().fullName()).avatar(getRandomImgUrl()).gender(i1 % 2 == 0 ? Gender.FEMALE : Gender.MALE)
 
                     .pictures(Arrays.asList(getRandomImgUrl(), "https://i.imgur.com/lpzlDQv.jpg", "https://i.imgur.com/pAZ8UUQ.jpg", "https://i.imgur.com/qfLln70.jpg"))
                     .lat(37.421998333333335 + i2 - i3)
@@ -59,8 +57,8 @@ public class DataLoader implements ApplicationRunner {
 
         }
 
-        //userRepository.saveAll(users);
-        //userESRepository.saveAll(esUsers);
+//        userRepository.saveAll(users);
+//        userESRepository.saveAll(esUsers);
 
 
     }

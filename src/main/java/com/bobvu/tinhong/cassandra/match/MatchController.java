@@ -1,5 +1,6 @@
 package com.bobvu.tinhong.cassandra.match;
 
+import com.bobvu.tinhong.cassandra.chat.ChatService;
 import com.bobvu.tinhong.cassandra.profile.ProfileResponse;
 import com.bobvu.tinhong.cassandra.user.User;
 import lombok.AllArgsConstructor;
@@ -12,13 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("user/match")
 public class MatchController {
 private final MatchService matchService;
+private final ChatService chatService;
 
-    @PostMapping("/addPartner")
-    public void likePartner(@RequestBody LikePartnerRequest request){
 
-    }
-
-    @GetMapping
+    @PostMapping
     public ResponseEntity<PageResponse<ProfileResponse>> findAllSuitablePerson(@RequestBody FindSuitablePersonRequest request){
         User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

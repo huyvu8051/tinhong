@@ -92,7 +92,11 @@ public class MyUserMapperImpl implements UserMapper{
                 target.setPassions(new ArrayList<Passion>(list1));
             }
         }
-        target.setDistance(source.getDistance());
+
+
+        if(source.getDistance() != null){
+            target.setDistance(source.getDistance());
+        }
         if (target.getGenderToShow() != null) {
             List<Gender> list2 = source.getGenderToShow();
             if (list2 != null) {
@@ -105,9 +109,19 @@ public class MyUserMapperImpl implements UserMapper{
                 target.setGenderToShow(new ArrayList<Gender>(list2));
             }
         }
-        target.setYearOfBirth(source.getYearOfBirth());
-        target.setMinAge(source.getMinAge());
-        target.setMaxAge(source.getMaxAge());
+
+        if(source.getYearOfBirth() != null){
+
+            target.setYearOfBirth(source.getYearOfBirth());
+        }
+
+        if(source.getMinAge() != null){
+            target.setMinAge(source.getMinAge());
+        }
+
+        if(source.getMaxAge() != null){
+            target.setMaxAge(source.getMaxAge());
+        }
 
         if (source.getLatitude() != null) {
             target.setLat(source.getLatitude());
@@ -164,7 +178,14 @@ public class MyUserMapperImpl implements UserMapper{
             return null;
         }
 
+
+
+
         ProfileResponse profileResponse = new ProfileResponse();
+
+        profileResponse.setUsername(user.getUsername());
+        profileResponse.setAvatar(user.getAvatar());
+        profileResponse.setFullName(user.getFullName());
 
         List<String> list = user.getPictures();
         if (list != null) {

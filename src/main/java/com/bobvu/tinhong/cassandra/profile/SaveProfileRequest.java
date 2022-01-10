@@ -22,12 +22,12 @@ public class SaveProfileRequest {
     private Double latitude;
 
 
-    private int distance;
+    private Integer distance;
 
     private List<Gender> genderToShow;
-    private int yearOfBirth;
-    private int minAge;
-    private int maxAge;
+    private Integer yearOfBirth;
+    private Integer minAge;
+    private Integer maxAge;
 
 
 }
